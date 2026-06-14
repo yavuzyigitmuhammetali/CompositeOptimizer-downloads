@@ -14,7 +14,7 @@
       --newer-release-to: #ffed9d;
     }
     body { margin: 0; }
-    main { max-width: 1040px; margin: 0 auto; padding: 40px 20px 56px; }
+    main { max-width: 1120px; margin: 0 auto; padding: 40px 20px 56px; }
     h1 { font-size: 28px; margin: 0 0 8px; }
     p { color: #4a5563; line-height: 1.5; }
     .version-context {
@@ -26,18 +26,30 @@
       color: #12395d;
       font-weight: 650;
     }
-    table {
+    .downloads-table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
       margin-top: 24px;
       background: white;
       border: 1px solid #d8dee8;
     }
+    .downloads-table th:nth-child(1),
+    .downloads-table td:nth-child(1) { width: 13%; }
+    .downloads-table th:nth-child(2),
+    .downloads-table td:nth-child(2),
+    .downloads-table th:nth-child(3),
+    .downloads-table td:nth-child(3),
+    .downloads-table th:nth-child(4),
+    .downloads-table td:nth-child(4) { width: 14%; }
+    .downloads-table th:nth-child(5),
+    .downloads-table td:nth-child(5) { width: 45%; }
     th, td {
       padding: 12px 14px;
       border-bottom: 1px solid #e6eaf0;
       text-align: left;
       vertical-align: top;
+      overflow-wrap: anywhere;
     }
     th { background: #edf1f7; font-weight: 650; }
     tr:last-child td { border-bottom: 0; }
@@ -59,6 +71,11 @@
     }
     a { color: #0b5cab; font-weight: 650; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+    }
     .notice {
       margin-top: 28px;
       padding: 18px 20px;
@@ -70,13 +87,18 @@
     .notice li { margin: 6px 0; }
     .badge {
       display: inline-block;
-      margin-left: 8px;
       padding: 2px 7px;
       border-radius: 999px;
       background: #d9ebff;
       color: #074d91;
       font-size: 12px;
       font-weight: 700;
+    }
+    .version-value {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
     }
     .soon { color: #7a8491; }
     .note-details { margin-top: 6px; }
@@ -104,7 +126,7 @@
         background: #122b41;
         color: #c6e4ff;
       }
-      table { background: #171d26; border-color: #2c3644; }
+      .downloads-table { background: #171d26; border-color: #2c3644; }
       th { background: #202938; }
       th, td { border-bottom-color: #2c3644; }
       a { color: #8fc7ff; }
@@ -114,6 +136,77 @@
       .note-details summary { color: #8fc7ff; }
       .note-details div { color: #aab4c2; }
     }
+    @media (max-width: 760px) {
+      main { padding: 28px 16px 44px; }
+      h1 { font-size: 26px; line-height: 1.18; }
+      .version-context { margin-top: 16px; }
+      .downloads-table {
+        display: block;
+        border: 0;
+        background: transparent;
+        margin-top: 20px;
+      }
+      .downloads-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .downloads-table tbody {
+        display: grid;
+        gap: 12px;
+      }
+      .downloads-table tr {
+        display: grid;
+        border: 1px solid #d8dee8;
+        background: #ffffff;
+      }
+      .downloads-table td {
+        display: grid;
+        grid-template-columns: minmax(94px, 32%) minmax(0, 1fr);
+        gap: 12px;
+        width: auto !important;
+        padding: 10px 12px;
+        border-bottom: 1px solid #e6eaf0;
+      }
+      .downloads-table td:last-child { border-bottom: 0; }
+      .downloads-table td::before {
+        content: attr(data-label);
+        color: #657181;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0;
+      }
+      .downloads-table td[data-label="Notes"] {
+        grid-template-columns: 1fr;
+      }
+      .downloads-table td[data-label="Notes"]::before {
+        margin-bottom: -4px;
+      }
+      .download-link { min-height: 0; }
+      .notice { padding: 16px; }
+      @media (prefers-color-scheme: dark) {
+        .downloads-table tr {
+          background: #171d26;
+          border-color: #2c3644;
+        }
+        .downloads-table td {
+          border-bottom-color: #2c3644;
+        }
+        .downloads-table td::before { color: #8f9bae; }
+      }
+    }
+    @media (max-width: 420px) {
+      main { padding-left: 14px; padding-right: 14px; }
+      .downloads-table td {
+        grid-template-columns: minmax(82px, 30%) minmax(0, 1fr);
+        gap: 10px;
+        padding: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -122,7 +215,7 @@
     <p>Latest version: <strong>1.0.3</strong></p>
     <p>This page hosts public application downloads only. Source code is not published here.</p>
     <div id="version-context" class="version-context" role="status"></div>
-    <table>
+    <table class="downloads-table">
       <thead>
         <tr>
           <th>Version</th>
@@ -134,11 +227,11 @@
       </thead>
       <tbody>
         <tr data-version="1.0.3">
-          <td>1.0.3 <span class="badge">Latest</span></td>
-          <td><a href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.3/SST-Composite-Optimizer-v1.0.3-macOS-arm64.zip">Download</a></td>
-          <td><span class="soon">Coming soon</span></td>
-          <td><span class="soon">Coming soon</span></td>
-          <td>Fix macOS update checking and improve the public downloads page.<details class="note-details"><summary>Read details</summary><div>Fix macOS update checking and improve the public downloads page.
+          <td data-label="Version"><span class="version-value">1.0.3 <span class="badge">Latest</span></span></td>
+          <td data-label="macOS arm64"><a class="download-link" href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.3/SST-Composite-Optimizer-v1.0.3-macOS-arm64.zip">Download</a></td>
+          <td data-label="Windows x64"><span class="soon">Coming soon</span></td>
+          <td data-label="Linux x64"><span class="soon">Coming soon</span></td>
+          <td data-label="Notes">Fix macOS update checking and improve the public downloads page.<details class="note-details"><summary>Read details</summary><div>Fix macOS update checking and improve the public downloads page.
 
 - Bundle a trusted certificate store for macOS update manifest checks.
 - Add an All Versions link from the app info dialog with the current version in the URL.
@@ -146,22 +239,22 @@
 - Show long release notes with a short summary and expandable details.</div></details></td>
         </tr>
         <tr data-version="1.0.2">
-          <td>1.0.2</td>
-          <td><a href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.2/SST-Composite-Optimizer-v1.0.2-macOS-arm64.zip">Download</a></td>
-          <td><span class="soon">Coming soon</span></td>
-          <td><span class="soon">Coming soon</span></td>
-          <td>Add the app information dialog and localized update controls.<details class="note-details"><summary>Read details</summary><div>Add the app information dialog and localized update controls.
+          <td data-label="Version"><span class="version-value">1.0.2</span></td>
+          <td data-label="macOS arm64"><a class="download-link" href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.2/SST-Composite-Optimizer-v1.0.2-macOS-arm64.zip">Download</a></td>
+          <td data-label="Windows x64"><span class="soon">Coming soon</span></td>
+          <td data-label="Linux x64"><span class="soon">Coming soon</span></td>
+          <td data-label="Notes">Add the app information dialog and localized update controls.<details class="note-details"><summary>Read details</summary><div>Add the app information dialog and localized update controls.
 
 - Add a header Info button with English and Turkish labels.
 - Show application version, update channel, downloads, manifest, and credits.
 - Add manual update checking from the app info dialog.</div></details></td>
         </tr>
         <tr data-version="1.0.1">
-          <td>1.0.1</td>
-          <td><a href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.1/SST-Composite-Optimizer-v1.0.1-macOS-arm64.zip">Download</a></td>
-          <td><span class="soon">Coming soon</span></td>
-          <td><span class="soon">Coming soon</span></td>
-          <td>Initial public macOS updater release.<details class="note-details"><summary>Read details</summary><div>Initial public macOS updater release.
+          <td data-label="Version"><span class="version-value">1.0.1</span></td>
+          <td data-label="macOS arm64"><a class="download-link" href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.1/SST-Composite-Optimizer-v1.0.1-macOS-arm64.zip">Download</a></td>
+          <td data-label="Windows x64"><span class="soon">Coming soon</span></td>
+          <td data-label="Linux x64"><span class="soon">Coming soon</span></td>
+          <td data-label="Notes">Initial public macOS updater release.<details class="note-details"><summary>Read details</summary><div>Initial public macOS updater release.
 
 - Add the private-to-public release workflow for macOS arm64.
 - Publish GitHub Release ZIP assets, SHA-256 metadata, and update manifests.
