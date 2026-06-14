@@ -1,4 +1,17 @@
 {
-  "latest": "",
-  "versions": []
+  "latest": "1.0.1",
+  "versions": [
+    {
+      "downloads": {
+        "macos-arm64": {
+          "sha256": "34838e2b546a5c030361d2d56a69c2d83aa644892ad2e2c7ed81b2a91f1f5513",
+          "url": "https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.1/SST-Composite-Optimizer-v1.0.1-macOS-arm64.zip"
+        }
+      },
+      "notes": "Latest stable release",
+      "release_url": "https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/tag/v1.0.1",
+      "tag": "v1.0.1",
+      "version": "1.0.1"
+    }
+  ]
 }
