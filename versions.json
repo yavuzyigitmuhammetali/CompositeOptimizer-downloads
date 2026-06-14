@@ -1,6 +1,18 @@
 {
-  "latest": "1.0.2",
+  "latest": "1.0.3",
   "versions": [
+    {
+      "downloads": {
+        "macos-arm64": {
+          "sha256": "bd2d27670db3b838466348ef5ddebb4c0735a0512b005ead11326293370236be",
+          "url": "https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.3/SST-Composite-Optimizer-v1.0.3-macOS-arm64.zip"
+        }
+      },
+      "notes": "Fix macOS update checking and improve the public downloads page.\n\n- Bundle a trusted certificate store for macOS update manifest checks.\n- Add an All Versions link from the app info dialog with the current version in the URL.\n- Highlight newer releases on the public downloads page when opened with a current version.\n- Show long release notes with a short summary and expandable details.",
+      "release_url": "https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/tag/v1.0.3",
+      "tag": "v1.0.3",
+      "version": "1.0.3"
+    },
     {
       "downloads": {
         "macos-arm64": {

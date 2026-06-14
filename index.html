@@ -10,11 +10,22 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #f6f7f9;
       color: #17202a;
+      --newer-release-from: #fff7d6;
+      --newer-release-to: #ffed9d;
     }
     body { margin: 0; }
     main { max-width: 1040px; margin: 0 auto; padding: 40px 20px 56px; }
     h1 { font-size: 28px; margin: 0 0 8px; }
     p { color: #4a5563; line-height: 1.5; }
+    .version-context {
+      display: none;
+      margin: 18px 0 0;
+      padding: 12px 14px;
+      border: 1px solid #b9d8ff;
+      background: #edf6ff;
+      color: #12395d;
+      font-weight: 650;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -30,6 +41,22 @@
     }
     th { background: #edf1f7; font-weight: 650; }
     tr:last-child td { border-bottom: 0; }
+    tr.newer-than-current {
+      position: relative;
+    }
+    tr.newer-than-current td {
+      animation: release-pulse 1.3s ease-in-out infinite alternate;
+    }
+    @keyframes release-pulse {
+      from {
+        background: var(--newer-release-from);
+        box-shadow: inset 4px 0 0 #f5b301;
+      }
+      to {
+        background: var(--newer-release-to);
+        box-shadow: inset 4px 0 0 #ffdf68;
+      }
+    }
     a { color: #0b5cab; font-weight: 650; text-decoration: none; }
     a:hover { text-decoration: underline; }
     .notice {
@@ -52,10 +79,31 @@
       font-weight: 700;
     }
     .soon { color: #7a8491; }
+    .note-details { margin-top: 6px; }
+    .note-details summary {
+      cursor: pointer;
+      color: #0b5cab;
+      font-weight: 650;
+    }
+    .note-details div {
+      margin-top: 6px;
+      color: #4a5563;
+      white-space: pre-wrap;
+    }
     code { font-size: 12px; word-break: break-all; }
     @media (prefers-color-scheme: dark) {
-      :root { background: #11161d; color: #eef2f6; }
+      :root {
+        background: #11161d;
+        color: #eef2f6;
+        --newer-release-from: #332b12;
+        --newer-release-to: #4a3b0f;
+      }
       p { color: #aab4c2; }
+      .version-context {
+        border-color: #245c8f;
+        background: #122b41;
+        color: #c6e4ff;
+      }
       table { background: #171d26; border-color: #2c3644; }
       th { background: #202938; }
       th, td { border-bottom-color: #2c3644; }
@@ -63,14 +111,17 @@
       .notice { background: #171d26; border-color: #2c3644; }
       .notice ol { color: #aab4c2; }
       .badge { background: #153655; color: #9cd0ff; }
+      .note-details summary { color: #8fc7ff; }
+      .note-details div { color: #aab4c2; }
     }
   </style>
 </head>
 <body>
   <main>
     <h1>SST Composite Optimizer Downloads</h1>
-    <p>Latest version: <strong>1.0.2</strong></p>
+    <p>Latest version: <strong>1.0.3</strong></p>
     <p>This page hosts public application downloads only. Source code is not published here.</p>
+    <div id="version-context" class="version-context" role="status"></div>
     <table>
       <thead>
         <tr>
@@ -82,14 +133,26 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1.0.2 <span class="badge">Latest</span></td>
+        <tr data-version="1.0.3">
+          <td>1.0.3 <span class="badge">Latest</span></td>
+          <td><a href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.3/SST-Composite-Optimizer-v1.0.3-macOS-arm64.zip">Download</a></td>
+          <td><span class="soon">Coming soon</span></td>
+          <td><span class="soon">Coming soon</span></td>
+          <td>Fix macOS update checking and improve the public downloads page.<details class="note-details"><summary>Read details</summary><div>Fix macOS update checking and improve the public downloads page.
+
+- Bundle a trusted certificate store for macOS update manifest checks.
+- Add an All Versions link from the app info dialog with the current version in the URL.
+- Highlight newer releases on the public downloads page when opened with a current version.
+- Show long release notes with a short summary and expandable details.</div></details></td>
+        </tr>
+        <tr data-version="1.0.2">
+          <td>1.0.2</td>
           <td><a href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.2/SST-Composite-Optimizer-v1.0.2-macOS-arm64.zip">Download</a></td>
           <td><span class="soon">Coming soon</span></td>
           <td><span class="soon">Coming soon</span></td>
           <td>Latest stable release</td>
         </tr>
-        <tr>
+        <tr data-version="1.0.1">
           <td>1.0.1</td>
           <td><a href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.1/SST-Composite-Optimizer-v1.0.1-macOS-arm64.zip">Download</a></td>
           <td><span class="soon">Coming soon</span></td>
@@ -111,5 +174,39 @@
     </section>
     <p><small>Update manifest: <code>https://yavuzyigitmuhammetali.github.io/CompositeOptimizer-downloads/updates/macos-arm64.json</code></small></p>
   </main>
+  <script>
+    const parseVersion = (value) => {
+      const match = String(value || "").trim().match(/^v?(\d+)(?:\.(\d+))?(?:\.(\d+))?/);
+      return match ? match.slice(1).map((part) => Number(part || 0)) : null;
+    };
+    const compareVersions = (left, right) => {
+      const a = parseVersion(left);
+      const b = parseVersion(right);
+      if (!a || !b) return String(left || "").localeCompare(String(right || ""));
+      for (let index = 0; index < 3; index += 1) {
+        if (a[index] !== b[index]) return a[index] - b[index];
+      }
+      return 0;
+    };
+    const params = new URLSearchParams(window.location.search);
+    const current = params.get("current");
+    const platform = params.get("platform") || "macOS arm64";
+    if (current) {
+      let newerCount = 0;
+      document.querySelectorAll("tr[data-version]").forEach((row) => {
+        if (compareVersions(row.dataset.version, current) > 0) {
+          row.classList.add("newer-than-current");
+          newerCount += 1;
+        }
+      });
+      const context = document.getElementById("version-context");
+      if (context) {
+        context.style.display = "block";
+        context.textContent = newerCount > 0
+          ? `Newer ${platform} version${newerCount === 1 ? "" : "s"} available for your current version ${current}.`
+          : `You are viewing downloads for your current version ${current}. No newer ${platform} version is listed.`;
+      }
+    }
+  </script>
 </body>
 </html>
