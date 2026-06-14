@@ -32,6 +32,15 @@
     tr:last-child td { border-bottom: 0; }
     a { color: #0b5cab; font-weight: 650; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    .notice {
+      margin-top: 28px;
+      padding: 18px 20px;
+      border: 1px solid #d8dee8;
+      background: #ffffff;
+    }
+    .notice h2 { margin: 0 0 8px; font-size: 20px; }
+    .notice ol { margin: 12px 0 0; padding-left: 22px; color: #4a5563; }
+    .notice li { margin: 6px 0; }
     .badge {
       display: inline-block;
       margin-left: 8px;
@@ -51,6 +60,8 @@
       th { background: #202938; }
       th, td { border-bottom-color: #2c3644; }
       a { color: #8fc7ff; }
+      .notice { background: #171d26; border-color: #2c3644; }
+      .notice ol { color: #aab4c2; }
       .badge { background: #153655; color: #9cd0ff; }
     }
   </style>
@@ -80,6 +91,17 @@
         </tr>
       </tbody>
     </table>
+    <section class="notice">
+      <h2>macOS first launch</h2>
+      <p>This app is not Apple-notarized yet, so macOS may show a security warning the first time it is opened.</p>
+      <ol>
+        <li>Move <strong>SST Composite Optimizer.app</strong> to the Applications folder.</li>
+        <li>Try opening the app once. If macOS blocks it, choose <strong>Done</strong>.</li>
+        <li>Open <strong>System Settings &gt; Privacy &amp; Security</strong>.</li>
+        <li>Find the blocked app message and choose <strong>Open Anyway / Yine de Aç</strong>.</li>
+        <li>Open the app again and confirm <strong>Open / Aç</strong>.</li>
+      </ol>
+    </section>
     <p><small>Update manifest: <code>https://yavuzyigitmuhammetali.github.io/CompositeOptimizer-downloads/updates/macos-arm64.json</code></small></p>
   </main>
 </body>
