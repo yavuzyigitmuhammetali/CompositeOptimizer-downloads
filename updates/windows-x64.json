@@ -1,8 +1,8 @@
 {
   "all_versions_url": "https://yavuzyigitmuhammetali.github.io/CompositeOptimizer-downloads/",
-  "download_url": "https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.4/SST-Composite-Optimizer-v1.0.4-macOS-arm64.zip",
+  "download_url": "https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.4/SST-Composite-Optimizer-v1.0.4-Windows-x64.zip",
   "notes": "Add Windows x64 packaging and release support.\n\n- Builds and verifies a Windows x64 PyInstaller package alongside the existing macOS arm64 package.\n- Publishes macOS and Windows ZIP assets into the public downloads repo from the same tagged release.\n- Adds platform-specific update manifests so Windows builds check `updates/windows-x64.json`.\n- Keeps the public downloads table grouped by version with separate macOS, Windows, and Linux columns.",
   "release_url": "https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/tag/v1.0.4",
-  "sha256": "ee3340c185f9f4444487d0c83dc3e10c57071060415e57d58bfdbe61a5865dfc",
+  "sha256": "66d1adefd3a144256597e220654dbd4de0d915c3c4a02cea99c528dbb51cec90",
   "version": "1.0.4"
 }

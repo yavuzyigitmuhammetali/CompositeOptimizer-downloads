@@ -212,7 +212,7 @@
 <body>
   <main>
     <h1>SST Composite Optimizer Downloads</h1>
-    <p>Latest version: <strong>1.0.3</strong></p>
+    <p>Latest version: <strong>1.0.4</strong></p>
     <p>This page hosts public application downloads only. Source code is not published here.</p>
     <div id="version-context" class="version-context" role="status"></div>
     <table class="downloads-table">
@@ -226,8 +226,20 @@
         </tr>
       </thead>
       <tbody>
+        <tr data-version="1.0.4">
+          <td data-label="Version"><span class="version-value">1.0.4 <span class="badge">Latest</span></span></td>
+          <td data-label="macOS arm64"><a class="download-link" href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.4/SST-Composite-Optimizer-v1.0.4-macOS-arm64.zip">Download</a></td>
+          <td data-label="Windows x64"><a class="download-link" href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.4/SST-Composite-Optimizer-v1.0.4-Windows-x64.zip">Download</a></td>
+          <td data-label="Linux x64"><span class="soon">Coming soon</span></td>
+          <td data-label="Notes">Add Windows x64 packaging and release support.<details class="note-details"><summary>Read details</summary><div>Add Windows x64 packaging and release support.
+
+- Builds and verifies a Windows x64 PyInstaller package alongside the existing macOS arm64 package.
+- Publishes macOS and Windows ZIP assets into the public downloads repo from the same tagged release.
+- Adds platform-specific update manifests so Windows builds check `updates/windows-x64.json`.
+- Keeps the public downloads table grouped by version with separate macOS, Windows, and Linux columns.</div></details></td>
+        </tr>
         <tr data-version="1.0.3">
-          <td data-label="Version"><span class="version-value">1.0.3 <span class="badge">Latest</span></span></td>
+          <td data-label="Version"><span class="version-value">1.0.3</span></td>
           <td data-label="macOS arm64"><a class="download-link" href="https://github.com/yavuzyigitmuhammetali/CompositeOptimizer-downloads/releases/download/v1.0.3/SST-Composite-Optimizer-v1.0.3-macOS-arm64.zip">Download</a></td>
           <td data-label="Windows x64"><span class="soon">Coming soon</span></td>
           <td data-label="Linux x64"><span class="soon">Coming soon</span></td>
@@ -273,9 +285,14 @@
         <li>Open the app again and confirm <strong>Open / Aç</strong>.</li>
       </ol>
     </section>
-    <p><small>Update manifest: <code>https://yavuzyigitmuhammetali.github.io/CompositeOptimizer-downloads/updates/macos-arm64.json</code></small></p>
+    <p><small>Update manifests: <code>https://yavuzyigitmuhammetali.github.io/CompositeOptimizer-downloads/updates/macos-arm64.json</code> · <code>https://yavuzyigitmuhammetali.github.io/CompositeOptimizer-downloads/updates/windows-x64.json</code> · <code>https://yavuzyigitmuhammetali.github.io/CompositeOptimizer-downloads/updates/linux-x64.json</code></small></p>
   </main>
   <script>
+    const platformLabels = {
+      "macos-arm64": "macOS arm64",
+      "windows-x64": "Windows x64",
+      "linux-x64": "Linux x64",
+    };
     const parseVersion = (value) => {
       const match = String(value || "").trim().match(/^v?(\d+)(?:\.(\d+))?(?:\.(\d+))?/);
       return match ? match.slice(1).map((part) => Number(part || 0)) : null;
@@ -291,7 +308,8 @@
     };
     const params = new URLSearchParams(window.location.search);
     const current = params.get("current");
-    const platform = params.get("platform") || "macOS arm64";
+    const platform = params.get("platform") || "macos-arm64";
+    const platformLabel = platformLabels[platform] || platform;
     if (current) {
       let newerCount = 0;
       document.querySelectorAll("tr[data-version]").forEach((row) => {
@@ -304,8 +322,8 @@
       if (context) {
         context.style.display = "block";
         context.textContent = newerCount > 0
-          ? `Newer ${platform} version${newerCount === 1 ? "" : "s"} available for your current version ${current}.`
-          : `You are viewing downloads for your current version ${current}. No newer ${platform} version is listed.`;
+          ? `Newer ${platformLabel} version${newerCount === 1 ? "" : "s"} available for your current version ${current}.`
+          : `You are viewing downloads for your current version ${current}. No newer ${platformLabel} version is listed.`;
       }
     }
   </script>
